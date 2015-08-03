@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  
+  <CustomActionGroup Id="PackageManager.SharePoint" Title="Package Manager" Location="PackageManager.SharePoint.Page" Sequence="10" Description="" ImageUrl="/_layouts/15/IMAGES/PackageManager.SharePoint/PackageManager.png" />
+  
+  <CustomAction Id="PackageManager.SharePoint.ManagePackageSource.Page" GroupId="PackageManager.SharePoint"
+    Location="PackageManager.SharePoint.Page"
+    Sequence="10"
+    Title="Manage package source"
+    Description="...">
+    <UrlAction Url="_admin/PackageManager.SharePoint/ManagePackageSource.aspx" />
+  </CustomAction>
+
+  <CustomAction Id="PackageManager.SharePoint.ManageFarmPackage.Page" GroupId="PackageManager.SharePoint"
+    Location="PackageManager.SharePoint.Page"
+    Sequence="10"
+    Title="Manage farm package"
+    Description="...">
+    <UrlAction Url="_admin/PackageManager.SharePoint/ManageFarmPackages.aspx" />
+  </CustomAction>
+
+  <CustomActionGroup Id="PackageManager.SharePoint" Location="Microsoft.SharePoint.Administration.Default" Sequence="100" Title="Package Manager" Description="Package Manager" ImageUrl="/_layouts/15/IMAGES/PackageManager.SharePoint/PackageManager.png">
+    <UrlAction Url="_admin/PackageManager.SharePoint/PackageManager.aspx"/>
+  </CustomActionGroup>
+  
+  <CustomAction Id="PackageManager.SharePoint.ManagePackageSource"
+    GroupId="PackageManager.SharePoint"
+    Location="Microsoft.SharePoint.Administration.Default"
+    Title="Manage package source"
+    Description="Manage package source">
+    <UrlAction Url="_admin/PackageManager.SharePoint/ManagePackageSource.aspx"/>
+  </CustomAction>
+
+  <CustomAction Id="PackageManager.SharePoint.ManageFarmPackage"
+    GroupId="PackageManager.SharePoint"
+    Location="Microsoft.SharePoint.Administration.Default"
+    Title="Manage farm packages"
+    Description="Manage package source">
+    <UrlAction Url="_admin/PackageManager.SharePoint/ManageFarmPackages.aspx"/>
+  </CustomAction>
+  
+  <!--
+  <CustomAction Id="CA_Contoso_IT_Analytics"
+    GroupId="CA_Applications"
+    Location="Microsoft.SharePoint.Administration.Default"
+    Title="Contoso web analytics"
+    Description="View contoso web analytics reports.">
+    <UrlAction Url="http://www.contoso.com/it/webanalytics.aspx"/>
+  </CustomAction>
+
+  <CustomAction Id="40008d2e-2cf3-4521-948d-50625d4c4c6b" GroupId="TimerJobs"
+      Location="Microsoft.SharePoint.Administration.Monitoring"
+      Sequence="10"
+      Title="Simple Page" Description="">
+    <UrlAction Url="_admin/PackageManager.SharePoint/SimplePage.aspx" />
+  </CustomAction>
+  -->   
+</Elements>
