@@ -6,15 +6,16 @@
 //   The manage farm packages page.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint
 {
     using System;
 
     using Microsoft.SharePoint.WebControls;
 
+    using NuGet;
+
     /// <summary>
-    /// The manage farm packages page.
+    ///     The manage farm packages page.
     /// </summary>
     public partial class ManageFarmPackagesPage : LayoutsPageBase
     {
@@ -29,6 +30,15 @@ namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint
         /// </param>
         protected void Page_Load(object sender, EventArgs e)
         {
+        }
+
+        /// <summary>
+        ///     The create child controls.
+        /// </summary>
+        protected override void CreateChildControls()
+        {
+            base.CreateChildControls();
+            this.PackagesDataSource.TypeName = typeof(PackagesDataSource).AssemblyQualifiedName;
         }
     }
 }

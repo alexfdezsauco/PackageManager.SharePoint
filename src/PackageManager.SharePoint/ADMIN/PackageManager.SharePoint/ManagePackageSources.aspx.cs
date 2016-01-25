@@ -6,7 +6,6 @@
 //   The manage package source page.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint
 {
     using System;
@@ -14,9 +13,9 @@ namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint
     using Microsoft.SharePoint.WebControls;
 
     /// <summary>
-    /// The manage package source page.
+    ///     The manage package source page.
     /// </summary>
-    public partial class ManagePackageSourcePage : LayoutsPageBase
+    public partial class ManagePackageSourcesPage : LayoutsPageBase
     {
         /// <summary>
         /// The page_ load.
@@ -29,6 +28,15 @@ namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint
         /// </param>
         protected void Page_Load(object sender, EventArgs e)
         {
+        }
+
+        /// <summary>
+        ///     The create child controls.
+        /// </summary>
+        protected override void CreateChildControls()
+        {
+            base.CreateChildControls();
+            this.PackageSourcesDataSource.TypeName = typeof(PackageSourcesDataSource).AssemblyQualifiedName;
         }
     }
 }

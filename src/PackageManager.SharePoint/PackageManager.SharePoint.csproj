@@ -14,7 +14,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{C1CDDADD-2546-481F-9697-4EA41081F2FC};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SandboxedSolution>False</SandboxedSolution>
-    <NuGetPackageImportStamp>4f0da036</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>1b5287f8</NuGetPackageImportStamp>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -50,9 +50,13 @@
     <Reference Include="Microsoft.Web.XmlTransform">
       <HintPath>..\..\lib\Microsoft.Web.Xdt.2.1.1\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
     </Reference>
-    <Reference Include="NuGet.Core, Version=2.8.60318.667, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\NuGet.Core.2.8.5\lib\net40-Client\NuGet.Core.dll</HintPath>
+      <HintPath>..\..\lib\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NuGet.Core, Version=2.10.1.766, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\NuGet.Core.2.10.1\lib\net40-Client\NuGet.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -65,6 +69,14 @@
     <Reference Include="Microsoft.SharePoint.Client.ServerRuntime" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Package.cs" />
+    <Compile Include="Services\PackageRepository.cs" />
+    <Compile Include="Services\Interfaces\IPackageRepository.cs" />
+    <Compile Include="PackagesDataSource.cs" />
+    <Compile Include="DialogResult.cs" />
+    <Compile Include="Services\PackageManagerSettings.cs" />
+    <Compile Include="Services\PackageSourceRepository.cs" />
+    <Compile Include="Services\Interfaces\IPackageSourceRepository.cs" />
     <Compile Include="ADMIN\PackageManager.SharePoint\PackageManager.aspx.cs">
       <DependentUpon>PackageManager.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -72,12 +84,12 @@
     <Compile Include="ADMIN\PackageManager.SharePoint\PackageManager.aspx.designer.cs">
       <DependentUpon>PackageManager.aspx.cs</DependentUpon>
     </Compile>
-    <Compile Include="ADMIN\PackageManager.SharePoint\ManagePackageSource.aspx.cs">
-      <DependentUpon>ManagePackageSource.aspx</DependentUpon>
+    <Compile Include="ADMIN\PackageManager.SharePoint\ManagePackageSources.aspx.cs">
+      <DependentUpon>ManagePackageSources.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ADMIN\PackageManager.SharePoint\ManagePackageSource.aspx.designer.cs">
-      <DependentUpon>ManagePackageSource.aspx.cs</DependentUpon>
+    <Compile Include="ADMIN\PackageManager.SharePoint\ManagePackageSources.aspx.designer.cs">
+      <DependentUpon>ManagePackageSources.aspx.cs</DependentUpon>
     </Compile>
     <Compile Include="ADMIN\PackageManager.SharePoint\ManageFarmPackages.aspx.cs">
       <DependentUpon>ManageFarmPackages.aspx</DependentUpon>
@@ -86,6 +98,15 @@
     <Compile Include="ADMIN\PackageManager.SharePoint\ManageFarmPackages.aspx.designer.cs">
       <DependentUpon>ManageFarmPackages.aspx.cs</DependentUpon>
     </Compile>
+    <Compile Include="ADMIN\PackageManager.SharePoint\NewPackageSource.aspx.cs">
+      <DependentUpon>NewPackageSource.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ADMIN\PackageManager.SharePoint\NewPackageSource.aspx.designer.cs">
+      <DependentUpon>NewPackageSource.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PackageSource.cs" />
+    <Compile Include="PackageSourceDataSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +133,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="ADMIN\PackageManager.SharePoint\Scripts\PackageManager.js" />
     <Content Include="Features\PackageManagerSharePointFeature\PackageManagerSharePointFeature.Template.xml">
       <DependentUpon>PackageManagerSharePointFeature.feature</DependentUpon>
       <SubType>Designer</SubType>
@@ -119,8 +141,9 @@
     <Content Include="ADMIN\PackageManager.SharePoint\PackageManager.aspx" />
     <Content Include="FodyWeavers.xml" />
     <Content Include="Images\PackageManager.SharePoint\PackageManager.png" />
-    <Content Include="ADMIN\PackageManager.SharePoint\ManagePackageSource.aspx" />
+    <Content Include="ADMIN\PackageManager.SharePoint\ManagePackageSources.aspx" />
     <Content Include="ADMIN\PackageManager.SharePoint\ManageFarmPackages.aspx" />
+    <Content Include="ADMIN\PackageManager.SharePoint\NewPackageSource.aspx" />
     <Content Include="PackageManager.SharePoint.Navigation\Elements.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -131,13 +154,13 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" Condition="'$(VSToolsPath)' != ''" />
-  <Import Project="..\..\lib\Fody.1.26.1\build\Fody.targets" Condition="Exists('..\..\lib\Fody.1.26.1\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\lib\Fody.1.26.1\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\lib\Fody.1.26.1\build\Fody.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\..\lib\Fody.1.26.1\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\lib\Fody.1.26.1\build\Fody.targets'))" />
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\..\lib\Fody.1.26.1\build\Fody.targets" Condition="Exists('..\..\lib\Fody.1.26.1\build\Fody.targets')" />
 </Project>

@@ -6,7 +6,6 @@
 //   The package manager page.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint
 {
     using System;
@@ -14,7 +13,7 @@ namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint
     using Microsoft.SharePoint.WebControls;
 
     /// <summary>
-    /// The package manager page.
+    ///     The package manager page.
     /// </summary>
     public partial class PackageManagerPage : LayoutsPageBase
     {

@@ -4,6 +4,7 @@
     <IncludeAssemblies>
       NuGet.Core
       Microsoft.Web.XmlTransform
+      Newtonsoft.Json
     </IncludeAssemblies>
   </Costura>
 </Weavers>

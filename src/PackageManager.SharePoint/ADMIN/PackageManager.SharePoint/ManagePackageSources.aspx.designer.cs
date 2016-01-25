@@ -10,17 +10,24 @@
 namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint {
     
     
-    public partial class PackageManagerPage {
+    public partial class ManagePackageSourcesPage {
         
         /// <summary>
-        /// ControlPanel control.
+        /// PackageSourceSPGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Microsoft.SharePoint.WebControls.AdminControlPanel ControlPanel;
+        protected global::Microsoft.SharePoint.WebControls.SPGridView PackageSourceSPGridView;
         
-        
+        /// <summary>
+        /// PackageSourcesDataSource control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ObjectDataSource PackageSourcesDataSource;
     }
 }
