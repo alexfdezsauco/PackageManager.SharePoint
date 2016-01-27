@@ -1,12 +1,8 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DialogResult.cs" company="">
-//   
+// <copyright file="DialogResult.cs" company="SANDs">
+//   Copyright © 2016 SANDs. All rights reserved
 // </copyright>
-// <summary>
-//   The dialog result.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace PackageManager.SharePoint
 {
     /// <summary>

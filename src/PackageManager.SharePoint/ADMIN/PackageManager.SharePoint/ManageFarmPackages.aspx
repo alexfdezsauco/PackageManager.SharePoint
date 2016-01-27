@@ -2,12 +2,13 @@
 <%@ Register Tagprefix="SharePoint" Namespace="Microsoft.SharePoint.WebControls" Assembly="Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 <%@ Assembly Name="Microsoft.Web.CommandUI, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ManageFarmPackages.aspx.cs" Inherits="PackageManager.SharePoint.Layouts.PackageManager.SharePoint.ManageFarmPackagesPage" DynamicMasterPageFile="~masterurl/default.master" %>
+<%@ Import Namespace="PackageManager.SharePoint.Helpers" %>
 
 <asp:Content ID="PageHead" ContentPlaceHolderID="PlaceHolderAdditionalPageHead" runat="server">
 </asp:Content>
 <asp:Content ID="Main" ContentPlaceHolderID="PlaceHolderMain" runat="server">
-    
-    <SharePoint:SPGridView runat="server" ID="PackageSourceSPGridView" AutoGenerateColumns="False" DataSourceID="PackagesDataSource" DataKeyNames="id">
+    <SharePoint:SPGridView runat="server" ID="PackageSourceSPGridView" AutoGenerateColumns="False" DataSourceID="PackagesDataSource" DataKeyNames="id" OnRowCommand="PackageSourceSPGridView_OnRowCommand">
+        <AlternatingRowStyle CssClass="ms-alternatingstrong" />
         <Columns>
             <asp:TemplateField HeaderText="Id">
                 <ItemTemplate>
@@ -29,16 +30,16 @@
                     <asp:Label ID="name1" runat="server" Text='<%# Bind("version") %>'/>
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:TemplateField>
+            <asp:TemplateField HeaderText="Action">
                 <ItemTemplate>
-                    <asp:Button runat="server" Text="Upgrade" Visible='<%# !Eval("version").Equals(Eval("installedVersion")) %>' />
+                    <asp:Button runat="server" CommandArgument='<%# Eval("id") + ";" + Eval("version") %>' CommandName="Update" Text="Update" Visible='<%# BindHelper.IsInstalled(Eval("installed")) && BindHelper.GreaterThan(Eval("version"), Eval("installedVersion")) %>' />
+                    <asp:Button runat="server" CommandArgument='<%# Eval("id") + ";" + Eval("version") %>' CommandName="Install" Text="Install" Visible='<%# !BindHelper.IsInstalled(Eval("installed")) %>' />
+                    <asp:Label runat="server" Visible='<%# Eval("version").Equals(Eval("installedVersion")) %>' ForeColor="#0072c6">Up to date</asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
     </SharePoint:SPGridView>
-
-    <asp:ObjectDataSource id="PackagesDataSource" runat="server" SelectMethod="SelectPackages">
-    </asp:ObjectDataSource>
+    <asp:ObjectDataSource id="PackagesDataSource" runat="server" SelectMethod="SelectPackages"/>
 </asp:Content>
 
 <asp:Content ID="PageTitle" ContentPlaceHolderID="PlaceHolderPageTitle" runat="server">

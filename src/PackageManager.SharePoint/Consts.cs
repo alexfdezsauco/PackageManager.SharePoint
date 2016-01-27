@@ -1,23 +1,24 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IXPackageRepository.cs" company="SANDs">
+// <copyright file="GlobalConsts.cs" company="SANDs">
 //   Copyright © 2016 SANDs. All rights reserved
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-namespace PackageManager.SharePoint.Services.Interfaces
-{
-    using System.Collections.Generic;
 
+namespace PackageManager.SharePoint
+{
     /// <summary>
-    ///     The PackageRepository interface.
+    /// The consts.
     /// </summary>
-    public interface IPackageRepository
+    internal static class Consts
     {
         /// <summary>
-        ///     The all.
+        /// The zero version.
         /// </summary>
-        /// <returns>
-        ///     The <see cref="IEnumerable" />.
-        /// </returns>
-        IEnumerable<Package> All();
+        public const string ZeroVersion = "0.0.0.0";
+
+        /// <summary>
+        /// The version property name.
+        /// </summary>
+        public const string VersionPropertyName = "Version";
     }
 }

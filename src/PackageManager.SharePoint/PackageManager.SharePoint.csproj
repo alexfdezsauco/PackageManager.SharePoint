@@ -14,7 +14,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{C1CDDADD-2546-481F-9697-4EA41081F2FC};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SandboxedSolution>False</SandboxedSolution>
-    <NuGetPackageImportStamp>1b5287f8</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>039e7a7f</NuGetPackageImportStamp>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -69,10 +69,21 @@
     <Reference Include="Microsoft.SharePoint.Client.ServerRuntime" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Package.cs" />
+    <Compile Include="Helpers\BindHelper.cs" />
+    <Compile Include="Extensions\EnumerableOfPackageRequestExtensions.cs" />
+    <Compile Include="Jobs\InstallOrUpdateSolutionPackagesJob.cs" />
+    <Compile Include="Jobs\JobDefinitionBase.cs" />
+    <Compile Include="Helpers\WebApplicationHelper.cs" />
+    <Compile Include="Jobs\PackageInfo.cs" />
+    <Compile Include="Consts.cs" />
+    <Compile Include="Services\PackageRequest.cs" />
+    <Compile Include="Services\PackageRequestFactory.cs" />
+    <Compile Include="Services\Interfaces\IPackageRequestService.cs" />
+    <Compile Include="Services\PackageRequestService.cs" />
+    <Compile Include="Services\Package.cs" />
     <Compile Include="Services\PackageRepository.cs" />
     <Compile Include="Services\Interfaces\IPackageRepository.cs" />
-    <Compile Include="PackagesDataSource.cs" />
+    <Compile Include="DataSources\PackagesDataSource.cs" />
     <Compile Include="DialogResult.cs" />
     <Compile Include="Services\PackageManagerSettings.cs" />
     <Compile Include="Services\PackageSourceRepository.cs" />
@@ -105,8 +116,8 @@
     <Compile Include="ADMIN\PackageManager.SharePoint\NewPackageSource.aspx.designer.cs">
       <DependentUpon>NewPackageSource.aspx.cs</DependentUpon>
     </Compile>
-    <Compile Include="PackageSource.cs" />
-    <Compile Include="PackageSourceDataSource.cs" />
+    <Compile Include="Services\PackageSource.cs" />
+    <Compile Include="DataSources\PackageSourceDataSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -139,7 +150,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="ADMIN\PackageManager.SharePoint\PackageManager.aspx" />
-    <Content Include="FodyWeavers.xml" />
+    <Content Include="FodyWeavers.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Images\PackageManager.SharePoint\PackageManager.png" />
     <Content Include="ADMIN\PackageManager.SharePoint\ManagePackageSources.aspx" />
     <Content Include="ADMIN\PackageManager.SharePoint\ManageFarmPackages.aspx" />

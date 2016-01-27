@@ -1,12 +1,10 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PackageSourceDataSource.cs" company="">
-//   
+// <copyright file="PackageSourceDataSource.cs" company="SANDs">
+//   Copyright © 2016 SANDs. All rights reserved
 // </copyright>
-// <summary>
-//   The package source data source.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace PackageManager.SharePoint
+
+namespace PackageManager.SharePoint.DataSources
 {
     using System;
     using System.Data;
@@ -49,7 +47,7 @@ namespace PackageManager.SharePoint
         }
 
         /// <summary>
-        ///  Deletes the package source.
+        /// Deletes the package source.
         /// </summary>
         /// <param name="id">
         /// The package source id.

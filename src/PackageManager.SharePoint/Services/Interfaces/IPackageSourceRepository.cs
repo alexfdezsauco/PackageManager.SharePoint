@@ -1,10 +1,7 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IPackageSourceRepository.cs" company="">
-//   
+// <copyright file="IPackageSourceRepository.cs" company="SANDs">
+//   Copyright © 2016 SANDs. All rights reserved
 // </copyright>
-// <summary>
-//   The PackageSourceRepository interface.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace PackageManager.SharePoint.Services.Interfaces
 {

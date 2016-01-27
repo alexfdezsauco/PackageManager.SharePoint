@@ -1,12 +1,9 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Package.cs" company="">
-//   
+// <copyright file="Package.cs" company="SANDs">
+//   Copyright © 2016 SANDs. All rights reserved
 // </copyright>
-// <summary>
-//   The package.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace PackageManager.SharePoint
+namespace PackageManager.SharePoint.Services
 {
     using NuGet;
 
@@ -21,16 +18,13 @@ namespace PackageManager.SharePoint
         /// <param name="package">
         /// The package.
         /// </param>
-        /// <param name="installed">
-        /// The b.
-        /// </param>
         /// <param name="installedVersion">
         /// </param>
-        public Package(IPackage package, bool installed, SemanticVersion installedVersion)
+        public Package(IPackage package, SemanticVersion installedVersion = null)
         {
             this.Id = package.Id;
             this.Version = package.Version;
-            this.Installed = installed;
+            this.Installed = installedVersion != null;
             this.InstalledVersion = installedVersion;
         }
 
@@ -40,7 +34,7 @@ namespace PackageManager.SharePoint
         public bool Installed { get; private set; }
 
         /// <summary>
-        /// Gets or sets the installed version.
+        ///     Gets or sets the installed version.
         /// </summary>
         public SemanticVersion InstalledVersion { get; set; }
 

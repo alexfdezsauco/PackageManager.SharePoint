@@ -1,40 +1,31 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PackagesDataSource.cs" company="">
-//   
+// <copyright file="PackagesDataSource.cs" company="SANDs">
+//   Copyright © 2016 SANDs. All rights reserved
 // </copyright>
-// <summary>
-//   The packages data source.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace PackageManager.SharePoint
+namespace PackageManager.SharePoint.DataSources
 {
-    using System;
-    using System.Collections.Generic;
     using System.Data;
-    using System.Threading;
-
-    using NuGet;
 
     using PackageManager.SharePoint.Services;
-
-    using IPackageRepository = PackageManager.SharePoint.Services.Interfaces.IPackageRepository;
+    using PackageManager.SharePoint.Services.Interfaces;
 
     /// <summary>
-    /// The packages data source.
+    ///     The packages data source.
     /// </summary>
     public sealed class PackagesDataSource
     {
         /// <summary>
-        /// The package repository.
+        ///     The package repository.
         /// </summary>
         private readonly IPackageRepository packageRepository = new PackageRepository();
 
         /// <summary>
-        /// The select packages method.
+        ///     The select packages method.
         /// </summary>
         /// <returns>
-        /// The <see cref="DataTable"/>.
+        ///     The <see cref="DataTable" />.
         /// </returns>
         public DataTable SelectPackages()
         {
@@ -46,7 +37,7 @@ namespace PackageManager.SharePoint
 
             foreach (var package in this.packageRepository.All())
             {
-                dataTable.Rows.Add(package.Id, package.Version.ToString(), package.Installed, package.InstalledVersion != null ? package.InstalledVersion.ToString() : null);
+                dataTable.Rows.Add(package.Id, package.Version.ToString(), package.Installed, package.Installed ? package.InstalledVersion.ToString() : null);
             }
 
             return dataTable;

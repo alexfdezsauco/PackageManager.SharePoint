@@ -1,10 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="NewPackageSource.aspx.cs" company="">
-//   
+// <copyright file="NewPackageSource.aspx.cs" company="SANDs">
+//   Copyright © 2016 SANDs. All rights reserved
 // </copyright>
-// <summary>
-//   The new package source.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint
 {

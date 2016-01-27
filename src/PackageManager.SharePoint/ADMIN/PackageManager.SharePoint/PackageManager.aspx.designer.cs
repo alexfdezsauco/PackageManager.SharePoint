@@ -21,6 +21,25 @@ namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint {
         /// </remarks>
         protected global::Microsoft.SharePoint.WebControls.AdminControlPanel ControlPanel;
         
-        
+        /*
+        /// <summary>
+        /// Left control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.WebPartZone Left;
+        */
+        /*
+        /// <summary>
+        /// Right control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.WebPartZone Right;
+        */
     }
 }

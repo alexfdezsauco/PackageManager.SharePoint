@@ -1,14 +1,13 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ManagePackageSource.aspx.cs" company="">
-//   
+// <copyright file="ManagePackageSource.aspx.cs" company="SANDs">
+//   Copyright © 2016 SANDs. All rights reserved
 // </copyright>
-// <summary>
-//   The manage package source page.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint
 {
     using System;
+
+    using global::PackageManager.SharePoint.DataSources;
 
     using Microsoft.SharePoint.WebControls;
 

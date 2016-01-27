@@ -1,10 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PackageManagerSettings.cs" company="">
-//   
+// <copyright file="PackageManagerSettings.cs" company="SANDs">
+//   Copyright © 2016 SANDs. All rights reserved
 // </copyright>
-// <summary>
-//   The package manager settings.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace PackageManager.SharePoint.Services
 {
@@ -21,7 +18,7 @@ namespace PackageManager.SharePoint.Services
         public const string PackageSourceProperytyName = "PackageManager.Settings";
 
         /// <summary>
-        /// The package sources.
+        ///     The package sources.
         /// </summary>
         [Persisted]
         private string packageSources;
@@ -45,7 +42,7 @@ namespace PackageManager.SharePoint.Services
         }
 
         /// <summary>
-        /// Gets or sets the package sources.
+        ///     Gets or sets the package sources.
         /// </summary>
         public string PackageSources
         {

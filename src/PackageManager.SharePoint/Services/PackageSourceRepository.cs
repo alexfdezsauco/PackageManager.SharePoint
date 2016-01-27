@@ -1,10 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PackageSourceRepository.cs" company="">
-//   
+// <copyright file="PackageSourceRepository.cs" company="SANDs">
+//   Copyright © 2016 SANDs. All rights reserved
 // </copyright>
-// <summary>
-//   The package source repository.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace PackageManager.SharePoint.Services
 {

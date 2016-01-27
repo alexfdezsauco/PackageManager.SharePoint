@@ -1,14 +1,11 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PackageRepository.cs" company="">
-//   
+// <copyright file="PackageRepository.cs" company="SANDs">
+//   Copyright © 2016 SANDs. All rights reserved
 // </copyright>
-// <summary>
-//   The package repository.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace PackageManager.SharePoint.Services
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -19,7 +16,6 @@ namespace PackageManager.SharePoint.Services
     using PackageManager.SharePoint.Services.Interfaces;
 
     using IPackageRepository = PackageManager.SharePoint.Services.Interfaces.IPackageRepository;
-    using PackageSource = PackageManager.SharePoint.PackageSource;
 
     /// <summary>
     ///     The package repository.
@@ -27,34 +23,54 @@ namespace PackageManager.SharePoint.Services
     public class PackageRepository : IPackageRepository
     {
         /// <summary>
-        /// The package source repository.
+        ///     The package source repository.
         /// </summary>
         private readonly IPackageSourceRepository packageSourceRepository = new PackageSourceRepository();
 
         /// <summary>
-        /// The all.
+        ///     The all.
         /// </summary>
         /// <returns>
-        /// The <see cref="IEnumerable"/>.
+        ///     The <see cref="IEnumerable" />.
         /// </returns>
         public IEnumerable<Package> All()
         {
             var solutions = SPFarm.Local.Solutions.ToList();
-            foreach (PackageSource packageSource in this.packageSourceRepository.All())
+            foreach (var packageSource in this.packageSourceRepository.All())
             {
-                var packageRepository = PackageRepositoryFactory.Default.CreateRepository(packageSource.Source);
-                var packages = packageRepository.GetPackages().Where(package => package.Id.ToLower().EndsWith(".wsp") && package.IsLatestVersion);
-                foreach (var package in packages)
+                if (packageSource.IsEnabled)
                 {
-                    var solution = solutions.Find(s => s.Name.ToLower().Equals(package.Id.ToLower()));
-                    if (solution != null)
+                    var packageRepository = PackageRepositoryFactory.Default.CreateRepository(packageSource.Source);
+                    IQueryable<IPackage> packages = null;
+                    try
                     {
-                        var installedVersion = string.IsNullOrWhiteSpace((string)solution.Properties["Version"]) ? new SemanticVersion("0.0.0.0") : new SemanticVersion((string)solution.Properties["Version"]);
-                        yield return new Package(package, true, installedVersion);
+                        packages = packageRepository.GetPackages().Where(package => package.Id.ToLower().EndsWith(".wsp") && package.IsLatestVersion);
                     }
-                    else
+                    catch
                     {
-                        yield return new Package(package, false, null);
+                    }
+
+                    if (packages != null)
+                    {
+                        foreach (var package in packages)
+                        {
+                            var solution = solutions.Find(s => s.Name.ToLower().Equals(package.Id.ToLower()));
+                            if (solution != null)
+                            {
+
+                                SemanticVersion installedVersion;
+                                if (!solution.Properties.Contains(Consts.VersionPropertyName) || !SemanticVersion.TryParse(solution.Properties[Consts.VersionPropertyName].ToString(), out installedVersion))
+                                {
+                                    installedVersion = new SemanticVersion(Consts.ZeroVersion);
+                                }
+
+                                yield return new Package(package, installedVersion);
+                            }
+                            else
+                            {
+                                yield return new Package(package);
+                            }
+                        }
                     }
                 }
             }

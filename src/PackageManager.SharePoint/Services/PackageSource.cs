@@ -1,12 +1,9 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PackageSource.cs" company="">
-//   
+// <copyright file="PackageSource.cs" company="SANDs">
+//   Copyright © 2016 SANDs. All rights reserved
 // </copyright>
-// <summary>
-//   The package source.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace PackageManager.SharePoint
+namespace PackageManager.SharePoint.Services
 {
     using System;
 
@@ -46,7 +43,7 @@ namespace PackageManager.SharePoint
         }
 
         /// <summary>
-        /// Gets or sets the id.
+        ///     Gets or sets the id.
         /// </summary>
         public Guid Id { get; set; }
 
