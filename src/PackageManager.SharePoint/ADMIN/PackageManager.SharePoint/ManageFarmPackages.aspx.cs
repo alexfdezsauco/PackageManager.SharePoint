@@ -15,7 +15,6 @@ namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint
     using global::PackageManager.SharePoint.Jobs;
     using global::PackageManager.SharePoint.Services;
 
-    using Microsoft.SharePoint;
     using Microsoft.SharePoint.WebControls;
 
     /// <summary>

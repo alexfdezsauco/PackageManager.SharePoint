@@ -47,6 +47,7 @@ namespace PackageManager.SharePoint.Services
             }
 
             solutionPackageInstallerJob.Schedule = new SPOneTimeSchedule(DateTime.Now.AddSeconds(2));
+            solutionPackageInstallerJob.Update();
         }
     }
 }
