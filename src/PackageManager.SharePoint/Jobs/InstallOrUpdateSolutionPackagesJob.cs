@@ -33,12 +33,12 @@ namespace PackageManager.SharePoint.Jobs
         /// <summary>
         ///     The job name pattern.
         /// </summary>
-        private const string JobNamePattern = "InstallOrUpdatePackageJob-{0}";
+        private const string JobNamePattern = "Install-Or-Update-PackageJob-{0}";
 
         /// <summary>
         ///     The job title pattern.
         /// </summary>
-        private const string InstallOrUpdatePackageJobTitlePattern = "Install or update packages: Command {0}";
+        private const string InstallOrUpdatePackageJobTitle = "Installing or updating solution packages";
 
         /// <summary>
         ///     The packages to be installed by this job.
@@ -61,10 +61,10 @@ namespace PackageManager.SharePoint.Jobs
         /// The command.
         /// </param>
         public InstallOrUpdateSolutionPackagesJob(string command)
-            : this(string.Format(CultureInfo.InvariantCulture, JobNamePattern, Guid.NewGuid()), Helpers.WebApplicationHelper.CurrentWithElevatedPrivileges(), null, SPJobLockType.Job)
+            : this(string.Format(CultureInfo.InvariantCulture, JobNamePattern, Guid.NewGuid()), WebApplicationHelper.CurrentWithElevatedPrivileges(), null, SPJobLockType.Job)
         {
             // TODO: Add validation for command?
-            this.Title = string.Format(CultureInfo.InvariantCulture, InstallOrUpdatePackageJobTitlePattern, command);
+            this.Title = InstallOrUpdatePackageJobTitle;
         }
 
         /// <summary>
@@ -148,7 +148,11 @@ namespace PackageManager.SharePoint.Jobs
             }
 
             var solutions = SPFarm.Local.Solutions.ToList();
-            foreach (var packageRequest in packageRequests.Distinct().SortByDependencies())
+            var solutionPackageRequests = packageRequests.Distinct().SortByDependencies().ToList();
+
+            var i = 0;
+            var count = solutionPackageRequests.Count;
+            foreach (var packageRequest in solutionPackageRequests)
             {
                 var packageManager = new PackageManager(packageRequest.Repository, path);
                 var package = packageRequest.Package;
@@ -170,6 +174,8 @@ namespace PackageManager.SharePoint.Jobs
                     solution.Properties[Constants.VersionPropertyName] = package.Version.ToString();
                     solution.Update();
                 }
+
+                this.UpdateProgress(Convert.ToInt32(++i / (count * 1.0d) * 100));
             }
         }
     }

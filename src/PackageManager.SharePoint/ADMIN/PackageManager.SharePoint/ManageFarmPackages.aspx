@@ -8,8 +8,8 @@
     <SharePoint:ScriptLink ID="ScriptLink1" name="SP.js" runat="server" ondemand="false" localizable="false" loadafterui="true" />
     <script language="javascript" type="text/javascript">
         function showJobIsScheduledOrRunningStatusMessage() {
-            var statusID = SP.UI.Status.addStatus("Package Manager:", "The install or update solution packages job is scheduled or running. Please wait and reload the page.");
-            SP.UI.Status.setStatusPriColor(statusID, 'red');
+            var statusID = SP.UI.Status.addStatus("Package Manager:", "The install or update solution packages job is scheduled or running. Please wait and reload the page or click <a href='/_admin/ServiceRunningJobs.aspx' target='new'>here</a> to see the details");
+            SP.UI.Status.setStatusPriColor(statusID, 'blue');
         }
     </script>
 </asp:Content>
