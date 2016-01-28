@@ -1,8 +1,12 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Package.cs" company="SANDs">
+// <copyright file="SolutionPackage.cs" company="SANDs">
 //   Copyright © 2016 SANDs. All rights reserved
 // </copyright>
+// <summary>
+//   
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace PackageManager.SharePoint.Services
 {
     using NuGet;

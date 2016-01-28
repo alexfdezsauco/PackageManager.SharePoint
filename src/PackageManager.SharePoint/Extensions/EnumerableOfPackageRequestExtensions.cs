@@ -67,7 +67,7 @@ namespace PackageManager.SharePoint.Extensions
             for (var i = 0; i < packageRequestList.Count; i++)
             {
                 var currentPackageRequest = packageRequestList[i];
-                var newIdx = sortedPackageRequestList.FindIndex(request => request.Package.Id.Equals(currentPackageRequest.Package.Id, StringComparison.InvariantCultureIgnoreCase));
+                var newIdx = sortedPackageRequestList.FindIndex(request => request.Package.Id.ToLower().Equals(currentPackageRequest.Package.Id.ToLower()));
 
                 var dependencies = new List<PackageDependency>();
                 foreach (var dependencySet in currentPackageRequest.Package.DependencySets)
@@ -85,7 +85,7 @@ namespace PackageManager.SharePoint.Extensions
                     var idx = int.MinValue;
                     foreach (var dependency in dependencies)
                     {
-                        idx = Math.Max(idx, sortedPackageRequestList.FindIndex(request => request.Package.Id.Equals(dependency.Id, StringComparison.InvariantCultureIgnoreCase)));
+                        idx = Math.Max(idx, sortedPackageRequestList.FindIndex(request => request.Package.Id.ToLower().Equals(dependency.Id.ToLower())));
                     }
 
                     sortedPackageRequestList.RemoveAt(newIdx);

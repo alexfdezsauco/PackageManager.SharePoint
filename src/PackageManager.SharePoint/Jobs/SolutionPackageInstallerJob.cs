@@ -155,7 +155,7 @@ namespace PackageManager.SharePoint.Jobs
             foreach (var packageRequest in solutionPackageRequests)
             {
                 var package = packageRequest.Package;
-                var solution = solutions.Find(s => s.Name.Equals(package.Id, StringComparison.InvariantCultureIgnoreCase));
+                var solution = solutions.Find(s => s.Name.ToLower().Equals(package.Id.ToLower()));
                 if (solution == null || solution.GetVersion().CompareTo(package.Version) != 0)
                 {
                     var packageManager = new PackageManager(packageRequest.Repository, path);

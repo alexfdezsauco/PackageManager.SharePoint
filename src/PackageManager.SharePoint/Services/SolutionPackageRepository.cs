@@ -3,10 +3,8 @@
 //   Copyright © 2016 SANDs. All rights reserved
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace PackageManager.SharePoint.Services
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -18,7 +16,7 @@ namespace PackageManager.SharePoint.Services
     using PackageManager.SharePoint.Services.Interfaces;
 
     using Constants = PackageManager.SharePoint.Constants;
-   
+
     /// <summary>
     ///     The package repository.
     /// </summary>
@@ -47,7 +45,7 @@ namespace PackageManager.SharePoint.Services
                     {
                         foreach (var package in solutionPackages)
                         {
-                            var solution = solutions.Find(s => s.Name.Equals(package.Id, StringComparison.InvariantCultureIgnoreCase));
+                            var solution = solutions.Find(s => s.Name.ToLower().Equals(package.Id.ToLower()));
                             if (solution != null)
                             {
                                 yield return new SolutionPackage(package, solution.GetVersion());
@@ -63,10 +61,10 @@ namespace PackageManager.SharePoint.Services
         }
 
         /// <summary>
-        /// Enumerates the installed <see cref="SolutionPackage"/>
+        ///     Enumerates the installed <see cref="SolutionPackage" />
         /// </summary>
         /// <returns>
-        /// An enumeration of <see cref="SolutionPackage"/>.
+        ///     An enumeration of <see cref="SolutionPackage" />.
         /// </returns>
         public IEnumerable<SolutionPackage> Installed()
         {
@@ -80,10 +78,9 @@ namespace PackageManager.SharePoint.Services
                     {
                         foreach (var package in solutionPackages)
                         {
-                            var solution = solutions.Find(s => s.Name.Equals(package.Id, StringComparison.InvariantCultureIgnoreCase));
+                            var solution = solutions.Find(s => s.Name.ToLower().Equals(package.Id.ToLower()));
                             if (solution != null)
                             {
-
                                 SemanticVersion installedVersion;
                                 if (!solution.Properties.Contains(Constants.VersionPropertyName) || !SemanticVersion.TryParse(solution.Properties[Constants.VersionPropertyName].ToString(), out installedVersion))
                                 {
@@ -98,17 +95,27 @@ namespace PackageManager.SharePoint.Services
             }
         }
 
+        /// <summary>
+        /// The initialize solution packages query.
+        /// </summary>
+        /// <param name="packageSource">
+        /// The package source.
+        /// </param>
+        /// <returns>
+        /// The <see cref="IQueryable"/>.
+        /// </returns>
         private static IQueryable<IPackage> InitializeSolutionPackagesQuery(SolutionPackageSource packageSource)
         {
             var packageRepository = PackageRepositoryFactory.Default.CreateRepository(packageSource.Source);
             IQueryable<IPackage> solutionPackages = null;
             try
             {
-                solutionPackages = packageRepository.GetPackages().Where(package => package.Id.EndsWith(Constants.SolutionPackagePostFix, StringComparison.InvariantCultureIgnoreCase) && package.IsLatestVersion);
+                solutionPackages = packageRepository.GetPackages().Where(package => package.Id.ToLower().EndsWith(Constants.SolutionPackagePostFix) && package.IsLatestVersion);
             }
             catch
             {
             }
+
             return solutionPackages;
         }
     }
