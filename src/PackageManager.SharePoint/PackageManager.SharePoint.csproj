@@ -69,25 +69,26 @@
     <Reference Include="Microsoft.SharePoint.Client.ServerRuntime" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\SPWebApplicationExtensions.cs" />
     <Compile Include="Helpers\BindHelper.cs" />
     <Compile Include="Extensions\EnumerableOfPackageRequestExtensions.cs" />
     <Compile Include="Jobs\InstallOrUpdateSolutionPackagesJob.cs" />
     <Compile Include="Jobs\JobDefinitionBase.cs" />
-    <Compile Include="Helpers\WebApplicationHelper.cs" />
+    <Compile Include="Helpers\WebApplication.cs" />
     <Compile Include="Jobs\PackageInfo.cs" />
-    <Compile Include="Consts.cs" />
-    <Compile Include="Services\PackageRequest.cs" />
-    <Compile Include="Services\PackageRequestFactory.cs" />
-    <Compile Include="Services\Interfaces\IPackageRequestService.cs" />
-    <Compile Include="Services\PackageRequestService.cs" />
-    <Compile Include="Services\Package.cs" />
-    <Compile Include="Services\PackageRepository.cs" />
-    <Compile Include="Services\Interfaces\IPackageRepository.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Services\SolutionPackageRequest.cs" />
+    <Compile Include="Services\SolutionPackageRequestFactory.cs" />
+    <Compile Include="Services\Interfaces\ISolutionPackageRequestService.cs" />
+    <Compile Include="Services\SolutionPackageRequestService.cs" />
+    <Compile Include="Services\SolutionPackage.cs" />
+    <Compile Include="Services\SolutionPackageRepository.cs" />
+    <Compile Include="Services\Interfaces\ISolutionPackageRepository.cs" />
     <Compile Include="DataSources\PackagesDataSource.cs" />
     <Compile Include="DialogResult.cs" />
     <Compile Include="Services\PackageManagerSettings.cs" />
-    <Compile Include="Services\PackageSourceRepository.cs" />
-    <Compile Include="Services\Interfaces\IPackageSourceRepository.cs" />
+    <Compile Include="Services\SolutionPackageSourceRepository.cs" />
+    <Compile Include="Services\Interfaces\ISolutionPackageSourceRepository.cs" />
     <Compile Include="ADMIN\PackageManager.SharePoint\PackageManager.aspx.cs">
       <DependentUpon>PackageManager.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -116,7 +117,7 @@
     <Compile Include="ADMIN\PackageManager.SharePoint\NewPackageSource.aspx.designer.cs">
       <DependentUpon>NewPackageSource.aspx.cs</DependentUpon>
     </Compile>
-    <Compile Include="Services\PackageSource.cs" />
+    <Compile Include="Services\SolutionPackageSource.cs" />
     <Compile Include="DataSources\PackageSourceDataSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -153,10 +154,14 @@
     <Content Include="FodyWeavers.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Images\PackageManager.SharePoint\CANCEL.GIF" />
+    <Content Include="Images\PackageManager.SharePoint\DELETE.GIF" />
+    <Content Include="Images\PackageManager.SharePoint\EDIT.GIF" />
     <Content Include="Images\PackageManager.SharePoint\PackageManager.png" />
     <Content Include="ADMIN\PackageManager.SharePoint\ManagePackageSources.aspx" />
     <Content Include="ADMIN\PackageManager.SharePoint\ManageFarmPackages.aspx" />
     <Content Include="ADMIN\PackageManager.SharePoint\NewPackageSource.aspx" />
+    <Content Include="Images\PackageManager.SharePoint\SAVE.GIF" />
     <Content Include="PackageManager.SharePoint.Navigation\Elements.xml">
       <SubType>Designer</SubType>
     </Content>

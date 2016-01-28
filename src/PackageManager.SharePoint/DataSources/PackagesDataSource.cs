@@ -19,7 +19,7 @@ namespace PackageManager.SharePoint.DataSources
         /// <summary>
         ///     The package repository.
         /// </summary>
-        private readonly IPackageRepository packageRepository = new PackageRepository();
+        private readonly ISolutionPackageRepository packageRepository = new SolutionPackageRepository();
 
         /// <summary>
         ///     The select packages method.

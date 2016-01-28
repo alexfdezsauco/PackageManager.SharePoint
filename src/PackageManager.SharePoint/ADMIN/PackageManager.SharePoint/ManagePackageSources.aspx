@@ -6,12 +6,12 @@
 <asp:Content ID="PageHead" ContentPlaceHolderID="PlaceHolderAdditionalPageHead" runat="server">
     <script type="text/javascript" src="Scripts/PackageManager.js"></script>
 </asp:Content>
-
 <asp:Content ID="Main" ContentPlaceHolderID="PlaceHolderMain" runat="server">
     <a href="javascript:newPackageSource();">Create New</a>
     <SharePoint:SPGridView runat="server" ID="PackageSourceSPGridView" AutoGenerateColumns="False" DataSourceID="PackageSourcesDataSource" DataKeyNames="id">
+        <AlternatingRowStyle CssClass="ms-alternatingstrong" />
         <Columns>
-            <asp:CommandField ButtonType="Image" ShowEditButton="true" ShowDeleteButton="True" EditImageUrl="/_layouts/images/edit.gif" UpdateImageUrl="/_layouts/images/save.gif" DeleteImageUrl="/_layouts/images/delete.gif" CancelImageUrl="/_layouts/images/CancelGlyph.16x16x32.png"/>
+            <asp:CommandField ButtonType="Image" ShowEditButton="true" ShowDeleteButton="True" EditImageUrl="/_layouts/15/IMAGES/PackageManager.SharePoint/edit.gif" UpdateImageUrl="/_layouts/15/IMAGES/PackageManager.SharePoint/save.gif" DeleteImageUrl="/_layouts/15/IMAGES/PackageManager.SharePoint/delete.gif" CancelImageUrl="/_layouts/15/IMAGES/PackageManager.SharePoint/cancel.gif"/>
             <asp:TemplateField HeaderText="">
                 <ItemTemplate>
                     <asp:HiddenField ID="id" runat="server" Value='<%# Bind("id") %>'/>

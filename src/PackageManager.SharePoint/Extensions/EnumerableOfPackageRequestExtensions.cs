@@ -22,28 +22,28 @@ namespace PackageManager.SharePoint.Extensions
         /// <summary>
         /// Groups the package requests by package id but returns the request for higher version only.
         /// </summary>
-        /// <param name="packageRequests">
+        /// <param name="solutionPackageRequests">
         /// The package requests
         /// </param>
         /// <returns>
         /// Distinct enumeration of package requests with higher version only.
         /// </returns>
-        public static IEnumerable<PackageRequest> Distinct(this IEnumerable<PackageRequest> packageRequests)
+        public static IEnumerable<SolutionPackageRequest> Distinct(this IEnumerable<SolutionPackageRequest> solutionPackageRequests)
         {
-            var packageRequestStorage = new SortedDictionary<string, PackageRequest>();
-            foreach (var packageRequest in packageRequests)
+            var packageRequestStorage = new SortedDictionary<string, SolutionPackageRequest>();
+            foreach (var solutionPackageRequest in solutionPackageRequests)
             {
-                var packageId = packageRequest.Package.Id;
+                var packageId = solutionPackageRequest.Package.Id;
                 if (!packageRequestStorage.Keys.Contains(packageId))
                 {
-                    packageRequestStorage[packageId] = packageRequest;
+                    packageRequestStorage[packageId] = solutionPackageRequest;
                 }
                 else
                 {
                     var storedPackageRequest = packageRequestStorage[packageId];
-                    if (storedPackageRequest.Package.Version.CompareTo(packageRequest.Package.Version) == -1)
+                    if (storedPackageRequest.Package.Version.CompareTo(solutionPackageRequest.Package.Version) == -1)
                     {
-                        packageRequestStorage[packageId] = packageRequest;
+                        packageRequestStorage[packageId] = solutionPackageRequest;
                     }
                 }
             }
@@ -60,10 +60,10 @@ namespace PackageManager.SharePoint.Extensions
         /// <returns>
         /// Sorted enumeration of package request.
         /// </returns>
-        public static IEnumerable<PackageRequest> SortByDependencies(this IEnumerable<PackageRequest> packageRequests)
+        public static IEnumerable<SolutionPackageRequest> SortByDependencies(this IEnumerable<SolutionPackageRequest> packageRequests)
         {
             var packageRequestList = packageRequests.ToList();
-            var sortedPackageRequestList = new List<PackageRequest>(packageRequestList);
+            var sortedPackageRequestList = new List<SolutionPackageRequest>(packageRequestList);
             for (var i = 0; i < packageRequestList.Count; i++)
             {
                 var currentPackageRequest = packageRequestList[i];

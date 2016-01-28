@@ -13,6 +13,15 @@ namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint {
     public partial class ManageFarmPackagesPage {
         
         /// <summary>
+        /// ScriptLink1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Microsoft.SharePoint.WebControls.ScriptLink ScriptLink1;
+        
+        /// <summary>
         /// PackageSourceSPGridView control.
         /// </summary>
         /// <remarks>

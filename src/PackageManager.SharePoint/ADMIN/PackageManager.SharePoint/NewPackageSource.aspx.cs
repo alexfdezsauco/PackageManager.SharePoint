@@ -21,7 +21,7 @@ namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint
         /// <summary>
         ///     The package source repository.
         /// </summary>
-        private IPackageSourceRepository packageSourceRepository;
+        private ISolutionPackageSourceRepository solutionPackageSourceRepository;
 
         /// <summary>
         /// The page_ load.
@@ -34,7 +34,7 @@ namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint
         /// </param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.packageSourceRepository = new PackageSourceRepository();
+            this.solutionPackageSourceRepository = new SolutionPackageSourceRepository();
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint
         /// </param>
         protected void Button1_OnClick(object sender, EventArgs e)
         {
-            this.packageSourceRepository.Add(new PackageSource(Guid.NewGuid(), this.SourceTextBox.Text, this.NameTextBox.Text, true));
+            this.solutionPackageSourceRepository.Add(new SolutionPackageSource(Guid.NewGuid(), this.SourceTextBox.Text, this.NameTextBox.Text, true));
             this.CloseDialog(DialogResult.OK);
         }
 

@@ -23,6 +23,8 @@ namespace PackageManager.SharePoint.Jobs
     using PackageManager.SharePoint.Helpers;
     using PackageManager.SharePoint.Services;
 
+    using Constants = PackageManager.SharePoint.Constants;
+
     /// <summary>
     ///     The install or update package job.
     /// </summary>
@@ -59,7 +61,7 @@ namespace PackageManager.SharePoint.Jobs
         /// The command.
         /// </param>
         public InstallOrUpdateSolutionPackagesJob(string command)
-            : this(string.Format(CultureInfo.InvariantCulture, JobNamePattern, Guid.NewGuid()), WebApplicationHelper.ResolveCurrentWebAppWithElevatedPrivileges(), null, SPJobLockType.Job)
+            : this(string.Format(CultureInfo.InvariantCulture, JobNamePattern, Guid.NewGuid()), Helpers.WebApplicationHelper.CurrentWithElevatedPrivileges(), null, SPJobLockType.Job)
         {
             // TODO: Add validation for command?
             this.Title = string.Format(CultureInfo.InvariantCulture, InstallOrUpdatePackageJobTitlePattern, command);
@@ -131,9 +133,9 @@ namespace PackageManager.SharePoint.Jobs
         {
             this.InitializePackages();
 
-            var packageRequestService = new PackageRequestService();
+            var packageRequestService = new SolutionPackageRequestService();
 
-            var packageRequests = new List<PackageRequest>();
+            var packageRequests = new List<SolutionPackageRequest>();
             foreach (var packageInfo in this.Packages)
             {
                 packageRequests.AddRange(packageRequestService.EnumPackageRequests(packageInfo.Id, new VersionSpec(SemanticVersion.Parse(packageInfo.Version))));
@@ -153,7 +155,7 @@ namespace PackageManager.SharePoint.Jobs
                 packageManager.InstallPackage(package, true, true);
 
                 var solutionFile = Path.Combine(Path.Combine(Path.Combine(path, package.GetFullName().Replace(" ", ".")), "content"), package.Id);
-                var solution = solutions.Find(s => s.Name.ToLower().Equals(package.Id.ToLower()));
+                var solution = solutions.Find(s => s.Name.Equals(package.Id,  StringComparison.InvariantCultureIgnoreCase));
                 if (File.Exists(solutionFile))
                 {
                     if (solution != null)
@@ -165,7 +167,7 @@ namespace PackageManager.SharePoint.Jobs
                         solution = SPFarm.Local.Solutions.Add(solutionFile);
                     }
 
-                    solution.Properties[Consts.VersionPropertyName] = package.Version.ToString();
+                    solution.Properties[Constants.VersionPropertyName] = package.Version.ToString();
                     solution.Update();
                 }
             }

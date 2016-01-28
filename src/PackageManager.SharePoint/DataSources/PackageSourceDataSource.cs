@@ -20,7 +20,7 @@ namespace PackageManager.SharePoint.DataSources
         /// <summary>
         ///     The package repository.
         /// </summary>
-        private readonly IPackageSourceRepository packageSourcesRepository = new PackageSourceRepository();
+        private readonly ISolutionPackageSourceRepository solutionPackageSourcesRepository = new SolutionPackageSourceRepository();
 
         /// <summary>
         ///     The select package sources.
@@ -37,7 +37,7 @@ namespace PackageManager.SharePoint.DataSources
             dataTable.Columns.Add("source");
             dataTable.Columns.Add("enabled", typeof(bool));
 
-            var storedPackageSource = this.packageSourcesRepository.All();
+            var storedPackageSource = this.solutionPackageSourcesRepository.All();
             foreach (var packageSource in storedPackageSource)
             {
                 dataTable.Rows.Add(packageSource.Id.ToString(), packageSource.Name, packageSource.Source, packageSource.IsEnabled);
@@ -54,7 +54,7 @@ namespace PackageManager.SharePoint.DataSources
         /// </param>
         public void DeletePackageSource(Guid id)
         {
-            this.packageSourcesRepository.Delete(id);
+            this.solutionPackageSourcesRepository.Delete(id);
         }
 
         /// <summary>
@@ -74,13 +74,13 @@ namespace PackageManager.SharePoint.DataSources
         /// </param>
         public void UpdatePackageSource(Guid id, string name, string source, bool enabled)
         {
-            var storedPackageSource = this.packageSourcesRepository.FindById(id);
+            var storedPackageSource = this.solutionPackageSourcesRepository.FindById(id);
             if (storedPackageSource != null)
             {
                 storedPackageSource.Name = name;
                 storedPackageSource.Source = source;
                 storedPackageSource.IsEnabled = enabled;
-                this.packageSourcesRepository.Update(storedPackageSource);
+                this.solutionPackageSourcesRepository.Update(storedPackageSource);
             }
         }
     }
