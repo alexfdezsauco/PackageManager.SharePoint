@@ -4,3 +4,5 @@ bin
 obj
 lib
 output
+*.user
+*.suo
