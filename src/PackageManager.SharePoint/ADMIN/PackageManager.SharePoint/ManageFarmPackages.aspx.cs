@@ -13,6 +13,7 @@ namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint
     using global::PackageManager.SharePoint.Extensions;
     using global::PackageManager.SharePoint.Helpers;
     using global::PackageManager.SharePoint.Jobs;
+    using global::PackageManager.SharePoint.Services;
 
     using Microsoft.SharePoint;
     using Microsoft.SharePoint.WebControls;
@@ -23,7 +24,7 @@ namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint
     public partial class ManageFarmPackagesPage : LayoutsPageBase
     {
         /// <summary>
-        /// Indicates whether a instance of <see cref="InstallOrUpdateSolutionPackagesJob"/> job scheduled or running.
+        /// Indicates whether a instance of <see cref="SolutionPackageInstallerJob"/> job scheduled or running.
         /// </summary>
         public bool isJobScheduledOrRunning;
 
@@ -61,18 +62,14 @@ namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint
         /// </param>
         protected void PackageSourceSPGridView_OnRowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (!this.isJobScheduledOrRunning && (e.CommandName.Equals("Install") || e.CommandName.Equals("Update")))
+            if (!this.isJobScheduledOrRunning && (e.CommandName.Equals(Commands.Install) || e.CommandName.Equals(Commands.Update)))
             {
+                var solutionPackageInstallerService = new SolutionPackageInstallerService();
                 var strings = e.CommandArgument.ToString().Split(';');
                 var packageId = strings[0].Trim();
                 var version = strings[1].Trim();
-                var installOrUpdatePackageJob = new InstallOrUpdateSolutionPackagesJob(e.CommandName)
-                                                    {
-                                                        Schedule = new SPOneTimeSchedule(DateTime.Now.AddSeconds(2))
-                                                    };
-                installOrUpdatePackageJob.Packages.Add(new PackageInfo(packageId, version));
-                installOrUpdatePackageJob.Update();
-
+                solutionPackageInstallerService.InstallOrUpdate(packageId, version, e.CommandName);
+            
                 // This call is a patch.
                 this.CheckJobStatus();
                 this.Refresh();
@@ -86,7 +83,7 @@ namespace PackageManager.SharePoint.Layouts.PackageManager.SharePoint
         /// </summary>
         private void CheckJobStatus()
         {
-            this.isJobScheduledOrRunning = WebApplicationHelper.CurrentWithElevatedPrivileges().IsJobScheduledOrRunning<InstallOrUpdateSolutionPackagesJob>();
+            this.isJobScheduledOrRunning = WebApplicationHelper.CurrentWithElevatedPrivileges().IsJobScheduledOrRunning<SolutionPackageInstallerJob>();
             if (this.isJobScheduledOrRunning)
             {
                 this.ClientScript.RegisterStartupScript(this.GetType(), "ShowJobIsScheduledOrRunningStatusMessage", "<script>ExecuteOrDelayUntilScriptLoaded(showJobIsScheduledOrRunningStatusMessage,'sp.js');</script>");

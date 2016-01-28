@@ -37,7 +37,7 @@ namespace PackageManager.SharePoint.DataSources
 
             foreach (var package in this.packageRepository.All())
             {
-                dataTable.Rows.Add(package.Id, package.Version.ToString(), package.Installed, package.Installed ? package.InstalledVersion.ToString() : null);
+                dataTable.Rows.Add(package.Id, package.AvailableVersion.ToString(), package.Installed, package.Installed ? package.InstalledVersion.ToString() : null);
             }
 
             return dataTable;

@@ -14,6 +14,7 @@ namespace PackageManager.SharePoint.Services
 
     using NuGet;
 
+    using PackageManager.SharePoint.Extensions;
     using PackageManager.SharePoint.Services.Interfaces;
 
     using Constants = PackageManager.SharePoint.Constants;
@@ -41,16 +42,40 @@ namespace PackageManager.SharePoint.Services
             {
                 if (packageSource.IsEnabled)
                 {
-                    var packageRepository = PackageRepositoryFactory.Default.CreateRepository(packageSource.Source);
-                    IQueryable<IPackage> solutionPackages = null;
-                    try
+                    var solutionPackages = InitializeSolutionPackagesQuery(packageSource);
+                    if (solutionPackages != null)
                     {
-                        solutionPackages = packageRepository.GetPackages().Where(package => package.Id.EndsWith(Constants.SolutionPackagePostFix, StringComparison.InvariantCultureIgnoreCase) && package.IsLatestVersion);
+                        foreach (var package in solutionPackages)
+                        {
+                            var solution = solutions.Find(s => s.Name.Equals(package.Id, StringComparison.InvariantCultureIgnoreCase));
+                            if (solution != null)
+                            {
+                                yield return new SolutionPackage(package, solution.GetVersion());
+                            }
+                            else
+                            {
+                                yield return new SolutionPackage(package);
+                            }
+                        }
                     }
-                    catch
-                    {
-                    }
+                }
+            }
+        }
 
+        /// <summary>
+        /// Enumerates the installed <see cref="SolutionPackage"/>
+        /// </summary>
+        /// <returns>
+        /// An enumeration of <see cref="SolutionPackage"/>.
+        /// </returns>
+        public IEnumerable<SolutionPackage> Installed()
+        {
+            var solutions = SPFarm.Local.Solutions.ToList();
+            foreach (var packageSource in this.solutionPackageSourceRepository.All())
+            {
+                if (packageSource.IsEnabled)
+                {
+                    var solutionPackages = InitializeSolutionPackagesQuery(packageSource);
                     if (solutionPackages != null)
                     {
                         foreach (var package in solutionPackages)
@@ -67,14 +92,24 @@ namespace PackageManager.SharePoint.Services
 
                                 yield return new SolutionPackage(package, installedVersion);
                             }
-                            else
-                            {
-                                yield return new SolutionPackage(package);
-                            }
                         }
                     }
                 }
             }
+        }
+
+        private static IQueryable<IPackage> InitializeSolutionPackagesQuery(SolutionPackageSource packageSource)
+        {
+            var packageRepository = PackageRepositoryFactory.Default.CreateRepository(packageSource.Source);
+            IQueryable<IPackage> solutionPackages = null;
+            try
+            {
+                solutionPackages = packageRepository.GetPackages().Where(package => package.Id.EndsWith(Constants.SolutionPackagePostFix, StringComparison.InvariantCultureIgnoreCase) && package.IsLatestVersion);
+            }
+            catch
+            {
+            }
+            return solutionPackages;
         }
     }
 }

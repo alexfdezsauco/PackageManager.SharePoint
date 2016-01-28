@@ -23,7 +23,7 @@ namespace PackageManager.SharePoint.Services
         public SolutionPackage(IPackage package, SemanticVersion installedVersion = null)
         {
             this.Id = package.Id;
-            this.Version = package.Version;
+            this.AvailableVersion = package.Version;
             this.Installed = installedVersion != null;
             this.InstalledVersion = installedVersion;
         }
@@ -46,6 +46,6 @@ namespace PackageManager.SharePoint.Services
         /// <summary>
         ///     Gets the version.
         /// </summary>
-        public SemanticVersion Version { get; private set; }
+        public SemanticVersion AvailableVersion { get; private set; }
     }
 }

@@ -10,9 +10,6 @@ namespace PackageManager.SharePoint.Extensions
 
     using Microsoft.SharePoint.Administration;
 
-    /// <summary>
-    /// The sp web application extensions.
-    /// </summary>
     public static class SPWebApplicationExtensions
     {
         /// <summary>
@@ -21,14 +18,14 @@ namespace PackageManager.SharePoint.Extensions
         /// <param name="this">
         /// The this.
         /// </param>
-        /// <typeparam name="TSPJobDefinition">
+        /// <typeparam name="TSpJobDefinition">
         /// </typeparam>
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool IsJobScheduledOrRunning<TSPJobDefinition>(this SPWebApplication @this)
+        public static bool IsJobScheduledOrRunning<TSpJobDefinition>(this SPWebApplication @this)
         {
-            return @this.JobDefinitions.FirstOrDefault(job => job is TSPJobDefinition) != null || @this.RunningJobs.OfType<SPRunningJob>().FirstOrDefault(job => job.JobDefinition is TSPJobDefinition) != null;
+            return @this.JobDefinitions.FirstOrDefault(job => job is TSpJobDefinition) != null || @this.RunningJobs.OfType<SPRunningJob>().FirstOrDefault(job => job.JobDefinition is TSpJobDefinition) != null;
         }
     }
 }

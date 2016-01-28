@@ -69,10 +69,14 @@
     <Reference Include="Microsoft.SharePoint.Client.ServerRuntime" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands.cs" />
+    <Compile Include="Extensions\SPSolutionExtensions.cs" />
+    <Compile Include="Services\Interfaces\ISolutionPackageInstallerService.cs" />
+    <Compile Include="Services\SolutionPackageInstallerService.cs" />
     <Compile Include="Extensions\SPWebApplicationExtensions.cs" />
     <Compile Include="Helpers\BindHelper.cs" />
     <Compile Include="Extensions\EnumerableOfPackageRequestExtensions.cs" />
-    <Compile Include="Jobs\InstallOrUpdateSolutionPackagesJob.cs" />
+    <Compile Include="Jobs\SolutionPackageInstallerJob.cs" />
     <Compile Include="Jobs\JobDefinitionBase.cs" />
     <Compile Include="Helpers\WebApplication.cs" />
     <Compile Include="Jobs\PackageInfo.cs" />
