@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>PackageManager.SharePoint.WSP</id>
+    <version>%VERSION_NUMBER%</version>
+    <authors>Igr Alexánder Fernández Saúco</authors>
+    <owners>Igr Alexánder Fernández Saúco</owners>
+	<!--
+	    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
+	    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
+	    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+	-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>SharePoint deployment package for PackageManager.SharePoint</description>
+	<!--    
+	  <releaseNotes>Summary of changes made in this release of the package.</releaseNotes> 
+	-->
+    <copyright>Copyright 2016</copyright>
+    <tags>PackageManager SharePoint</tags>
+  </metadata>
+</package>
