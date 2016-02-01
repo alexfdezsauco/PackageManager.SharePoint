@@ -40,20 +40,18 @@ namespace PackageManager.SharePoint.Services
             {
                 if (packageSource.IsEnabled)
                 {
-                    var solutionPackages = InitializeSolutionPackagesQuery(packageSource);
-                    if (solutionPackages != null)
+                    var solutionPackageGroups = InitializeSolutionPackagesQuery(packageSource).ToList().GroupBy(package => package.Id);
+                    foreach (var solutionPackageGroup in solutionPackageGroups)
                     {
-                        foreach (var package in solutionPackages)
+                        IPackage solutionPackage = solutionPackageGroup.FindByVersion(new VersionSpec(solutionPackageGroup.Max(p => p.Version))).First();
+                        var solution = solutions.Find(s => s.Name.ToLower().Equals(solutionPackage.Id.ToLower()));
+                        if (solution != null)
                         {
-                            var solution = solutions.Find(s => s.Name.ToLower().Equals(package.Id.ToLower()));
-                            if (solution != null)
-                            {
-                                yield return new SolutionPackage(package, solution.GetVersion());
-                            }
-                            else
-                            {
-                                yield return new SolutionPackage(package);
-                            }
+                            yield return new SolutionPackage(solutionPackage, solution.GetVersion());
+                        }
+                        else
+                        {
+                            yield return new SolutionPackage(solutionPackage);
                         }
                     }
                 }
