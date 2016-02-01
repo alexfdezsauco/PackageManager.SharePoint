@@ -10,6 +10,7 @@ $projectFile = Join-Path $srcDir "PackageManager.SharePoint\PackageManager.Share
 
 $nuspecFileName = "PackageManager.SharePoint.WSP.nuspec"
 $nuspecTemplateFile = Join-Path $deploymentDir (Join-Path "NuGet\PackageManager.SharePoint.WSP\" $nuspecFileName)
+$toolsTemplateDir = Join-Path $deploymentDir "NuGet\PackageManager.SharePoint.WSP\tools"
 $nugetPackBaseDir = Join-Path $outDir "nuget-pkg\PackageManager.SharePoint.WSP"
 $nugetPackOutDir = Join-Path $outDir "nuget\PackageManager.SharePoint.WSP"
 $nuspecOutputFile = Join-Path $nugetPackBaseDir $nuspecFileName
@@ -38,6 +39,7 @@ $nuspecXml.package.metadata.version = $versionNumber.ToString()
 $nuspecXml.Save($nuspecOutputFile)
 
 Copy-Item -Path $wspFile -Destination $wspOutputDir
+Copy-Item -Path $toolsTemplateDir -Filter *.ps1 -Destination $nugetPackBaseDir -Recurse
 
 $NuGetExec = Join-Path $srcDir ".nuget\nuget.exe"
 & $NuGetExec pack $nuspecOutputFile -BasePath $nugetPackBaseDir -OutputDirectory $nugetPackOutDir
