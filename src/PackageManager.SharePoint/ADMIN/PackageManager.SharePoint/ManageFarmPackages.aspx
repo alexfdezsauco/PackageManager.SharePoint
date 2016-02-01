@@ -1,4 +1,4 @@
-﻿<%@ Assembly Name="$SharePoint.Project.AssemblyFullName$" %>
+<%@ Assembly Name="$SharePoint.Project.AssemblyFullName$" %>
 <%@ Register Tagprefix="SharePoint" Namespace="Microsoft.SharePoint.WebControls" Assembly="Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 <%@ Assembly Name="Microsoft.Web.CommandUI, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ManageFarmPackages.aspx.cs" Inherits="PackageManager.SharePoint.Layouts.PackageManager.SharePoint.ManageFarmPackagesPage" DynamicMasterPageFile="~masterurl/default.master" %>
@@ -8,7 +8,7 @@
     <SharePoint:ScriptLink ID="ScriptLink1" name="SP.js" runat="server" ondemand="false" localizable="false" loadafterui="true" />
     <script language="javascript" type="text/javascript">
         function showJobIsScheduledOrRunningStatusMessage() {
-            var statusID = SP.UI.Status.addStatus("Package Manager:", "The install or update solution packages job is scheduled or running. Please wait and reload the page or click <a href='/_admin/ServiceRunningJobs.aspx' target='new'>here</a> to see the details");
+            var statusID = SP.UI.Status.addStatus("Package Manager:", "The solution package installer job is scheduled or running. Please wait and reload the page. Track the progress <a href='/_admin/ServiceRunningJobs.aspx' target='new'>here</a>.");
             SP.UI.Status.setStatusPriColor(statusID, 'blue');
         }
     </script>
