@@ -110,7 +110,7 @@ namespace PackageManager.SharePoint.Services
             IQueryable<IPackage> solutionPackages = null;
             try
             {
-                solutionPackages = packageRepository.GetPackages().Where(package => package.Id.ToLower().EndsWith(Constants.SolutionPackagePostFix) && package.IsLatestVersion);
+                solutionPackages = packageRepository.GetPackages().Where(package => package.Id.ToLower().EndsWith(Constants.SolutionPackagePostFix) && package.IsAbsoluteLatestVersion);
             }
             catch
             {
