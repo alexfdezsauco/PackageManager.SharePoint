@@ -55,5 +55,11 @@
 </asp:Content>
 
 <asp:Content ID="PageTitleInTitleArea" ContentPlaceHolderID="PlaceHolderPageTitleInTitleArea" runat="server">
-    Manage Farm Packages
+    <span><a href="/_admin/PackageManager.SharePoint/PackageManager.aspx">Manage Farm Packages</a></span>
+    <a href="javascript:;" id="ms-pageDescriptionDiv" class=" js-callout-launchPoint">
+	  <span id="ms-pageDescriptionImage">&nbsp;</span>
+	</a>
+    <span class="ms-accessible" id="ms-pageDescription">
+	    This page has a list of the Solutions Package installed in the farm and the available updates from Package Sources.
+	</span>
 </asp:Content>

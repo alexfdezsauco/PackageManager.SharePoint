@@ -54,7 +54,12 @@
 <asp:Content ID="PageTitle" ContentPlaceHolderID="PlaceHolderPageTitle" runat="server">
     Manage Package Sources
 </asp:Content>
-
 <asp:Content ID="PageTitleInTitleArea" ContentPlaceHolderID="PlaceHolderPageTitleInTitleArea" runat="server">
-    Manage Package Sources
+    <span><a href="/_admin/PackageManager.SharePoint/PackageManager.aspx">Manage Package Sources</a></span>
+    <a href="javascript:;" id="ms-pageDescriptionDiv" class=" js-callout-launchPoint">
+	  <span id="ms-pageDescriptionImage">&nbsp;</span>
+	</a>
+    <span class="ms-accessible" id="ms-pageDescription">
+	    This page has a list of the configured Package Sources.
+	</span>
 </asp:Content>
