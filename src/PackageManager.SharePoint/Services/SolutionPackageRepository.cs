@@ -15,8 +15,6 @@ namespace PackageManager.SharePoint.Services
     using PackageManager.SharePoint.Extensions;
     using PackageManager.SharePoint.Services.Interfaces;
 
-    using Constants = PackageManager.SharePoint.Constants;
-
     /// <summary>
     ///     The package repository.
     /// </summary>
@@ -63,25 +61,16 @@ namespace PackageManager.SharePoint.Services
         {
             var solutions = SPFarm.Local.Solutions.ToList();
             var repository = new AggregateRepository(this.solutionPackageSourceRepository.All().Where(source => source.IsEnabled).Select(source => PackageRepositoryFactory.Default.CreateRepository(source.Source)));
-            var solutionPackages = repository.QueryForAbsoluteLatestVersionOfSolutionPackages();
-            if (solutionPackages != null)
+            var solutionPackageGroups = repository.QueryForAbsoluteLatestVersionOfSolutionPackages().ToList().GroupBy(package => package.Id);
+            foreach (var solutionPackageGroup in solutionPackageGroups)
             {
-                foreach (var package in solutionPackages)
+                IPackage solutionPackage = solutionPackageGroup.FindByVersion(new VersionSpec(solutionPackageGroup.Max(p => p.Version))).First();
+                var solution = solutions.Find(s => s.Name.ToLower().Equals(solutionPackage.Id.ToLower()));
+                if (solution != null)
                 {
-                    var solution = solutions.Find(s => s.Name.ToLower().Equals(package.Id.ToLower()));
-                    if (solution != null)
-                    {
-                        SemanticVersion installedVersion;
-                        if (!solution.Properties.Contains(Constants.VersionPropertyName) || !SemanticVersion.TryParse(solution.Properties[Constants.VersionPropertyName].ToString(), out installedVersion))
-                        {
-                            installedVersion = new SemanticVersion(Constants.ZeroVersion);
-                        }
-
-                        yield return new SolutionPackage(package, installedVersion);
-                    }
+                    yield return new SolutionPackage(solutionPackage, solution.GetVersion());
                 }
             }
         }
-
     }
 }
