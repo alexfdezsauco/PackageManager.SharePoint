@@ -31,29 +31,24 @@ namespace PackageManager.SharePoint.Services
         ///     Enumerate all available solution packages.
         /// </summary>
         /// <returns>
-        ///     The <see cref="IEnumerable" />.
+        ///     The <see cref="IEnumerable{SolutionPackage}" />.
         /// </returns>
         public IEnumerable<SolutionPackage> All()
         {
             var solutions = SPFarm.Local.Solutions.ToList();
-            foreach (var packageSource in this.solutionPackageSourceRepository.All())
+            var repository = new AggregateRepository(this.solutionPackageSourceRepository.All().Where(source => source.IsEnabled).Select(source => PackageRepositoryFactory.Default.CreateRepository(source.Source)));
+            var solutionPackageGroups = repository.QueryForAbsoluteLatestVersionOfSolutionPackages().ToList().GroupBy(package => package.Id);
+            foreach (var solutionPackageGroup in solutionPackageGroups)
             {
-                if (packageSource.IsEnabled)
+                IPackage solutionPackage = solutionPackageGroup.FindByVersion(new VersionSpec(solutionPackageGroup.Max(p => p.Version))).First();
+                var solution = solutions.Find(s => s.Name.ToLower().Equals(solutionPackage.Id.ToLower()));
+                if (solution != null)
                 {
-                    var solutionPackageGroups = InitializeSolutionPackagesQuery(packageSource).ToList().GroupBy(package => package.Id);
-                    foreach (var solutionPackageGroup in solutionPackageGroups)
-                    {
-                        IPackage solutionPackage = solutionPackageGroup.FindByVersion(new VersionSpec(solutionPackageGroup.Max(p => p.Version))).First();
-                        var solution = solutions.Find(s => s.Name.ToLower().Equals(solutionPackage.Id.ToLower()));
-                        if (solution != null)
-                        {
-                            yield return new SolutionPackage(solutionPackage, solution.GetVersion());
-                        }
-                        else
-                        {
-                            yield return new SolutionPackage(solutionPackage);
-                        }
-                    }
+                    yield return new SolutionPackage(solutionPackage, solution.GetVersion());
+                }
+                else
+                {
+                    yield return new SolutionPackage(solutionPackage);
                 }
             }
         }
@@ -67,54 +62,26 @@ namespace PackageManager.SharePoint.Services
         public IEnumerable<SolutionPackage> Installed()
         {
             var solutions = SPFarm.Local.Solutions.ToList();
-            foreach (var packageSource in this.solutionPackageSourceRepository.All())
+            var repository = new AggregateRepository(this.solutionPackageSourceRepository.All().Where(source => source.IsEnabled).Select(source => PackageRepositoryFactory.Default.CreateRepository(source.Source)));
+            var solutionPackages = repository.QueryForAbsoluteLatestVersionOfSolutionPackages();
+            if (solutionPackages != null)
             {
-                if (packageSource.IsEnabled)
+                foreach (var package in solutionPackages)
                 {
-                    var solutionPackages = InitializeSolutionPackagesQuery(packageSource);
-                    if (solutionPackages != null)
+                    var solution = solutions.Find(s => s.Name.ToLower().Equals(package.Id.ToLower()));
+                    if (solution != null)
                     {
-                        foreach (var package in solutionPackages)
+                        SemanticVersion installedVersion;
+                        if (!solution.Properties.Contains(Constants.VersionPropertyName) || !SemanticVersion.TryParse(solution.Properties[Constants.VersionPropertyName].ToString(), out installedVersion))
                         {
-                            var solution = solutions.Find(s => s.Name.ToLower().Equals(package.Id.ToLower()));
-                            if (solution != null)
-                            {
-                                SemanticVersion installedVersion;
-                                if (!solution.Properties.Contains(Constants.VersionPropertyName) || !SemanticVersion.TryParse(solution.Properties[Constants.VersionPropertyName].ToString(), out installedVersion))
-                                {
-                                    installedVersion = new SemanticVersion(Constants.ZeroVersion);
-                                }
-
-                                yield return new SolutionPackage(package, installedVersion);
-                            }
+                            installedVersion = new SemanticVersion(Constants.ZeroVersion);
                         }
+
+                        yield return new SolutionPackage(package, installedVersion);
                     }
                 }
             }
         }
 
-        /// <summary>
-        /// The initialize solution packages query.
-        /// </summary>
-        /// <param name="packageSource">
-        /// The package source.
-        /// </param>
-        /// <returns>
-        /// The <see cref="IQueryable"/>.
-        /// </returns>
-        private static IQueryable<IPackage> InitializeSolutionPackagesQuery(SolutionPackageSource packageSource)
-        {
-            var packageRepository = PackageRepositoryFactory.Default.CreateRepository(packageSource.Source);
-            IQueryable<IPackage> solutionPackages = null;
-            try
-            {
-                solutionPackages = packageRepository.GetPackages().Where(package => package.Id.ToLower().EndsWith(Constants.SolutionPackagePostFix) && package.IsAbsoluteLatestVersion);
-            }
-            catch
-            {
-            }
-
-            return solutionPackages;
-        }
     }
 }

@@ -72,6 +72,7 @@
     <Compile Include="Commands.cs" />
     <Compile Include="Extensions\SPSolutionExtensions.cs" />
     <Compile Include="Services\Interfaces\ISolutionPackageInstallerService.cs" />
+    <Compile Include="Extensions\PackageRepositoryExtensions.cs" />
     <Compile Include="Services\SolutionPackageInstallerService.cs" />
     <Compile Include="Extensions\SPWebApplicationExtensions.cs" />
     <Compile Include="Helpers\BindHelper.cs" />
