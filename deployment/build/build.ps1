@@ -42,4 +42,4 @@ Copy-Item -Path $wspFile -Destination $wspOutputDir
 Copy-Item -Path $toolsTemplateDir -Filter *.ps1 -Destination $nugetPackBaseDir -Recurse
 
 $NuGetExec = Join-Path $srcDir ".nuget\nuget.exe"
-& $NuGetExec pack $nuspecOutputFile -BasePath $nugetPackBaseDir -OutputDirectory $nugetPackOutDir
+& $NuGetExec pack $nuspecOutputFile -BasePath $nugetPackBaseDir -OutputDirectory $nugetPackOutDir -NoPackageAnalysis
