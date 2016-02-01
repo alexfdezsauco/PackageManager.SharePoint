@@ -3,7 +3,7 @@
 $versionNumber = $null
 if (Test-Path env:\GITVERSION_NUGETVERSIONV2)
 {
-	$versionNumber = Get-ChildItem env:\GITVERSION_NUGETVERSIONV2
+	$versionNumber = (Get-ChildItem env:\GITVERSION_NUGETVERSIONV2).Value
 }
 else 
 {
