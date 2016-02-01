@@ -26,7 +26,7 @@ Maybe the naming convention looks weak, but there is only one package in the gal
 
 1) Download the raw [PackageManager.SharePoint.WSP.nupkg](https://www.nuget.org/packages/PackageManager.SharePoint.WSP) from NuGet Gallery.
 
-2) Unpack the nupkg file into a %UNPACK_DIR%.
+2) Unpack the nupkg.
 
 3) Open a PowerShell terminal and run:
 
