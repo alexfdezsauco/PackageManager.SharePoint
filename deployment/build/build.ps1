@@ -1,5 +1,14 @@
 ﻿$buildScriptDir = (Split-Path $MyInvocation.MyCommand.Path)
-$versionNumber = (GitVersion /showvariable NuGetVersionV2)
+
+$versionNumber = $null
+if (Test-Path env:\GITVERSION_NUGETVERSIONV2)
+{
+	$versionNumber = Get-ChildItem env:\GITVERSION_NUGETVERSIONV2
+}
+else 
+{
+	$versionNumber = (GitVersion /showvariable NuGetVersionV2)
+}
 
 $workspaceDir = Join-Path $buildScriptDir "..\.."
 $srcDir = Join-Path $workspaceDir "src"
