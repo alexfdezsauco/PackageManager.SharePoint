@@ -1,4 +1,4 @@
-<%@ Assembly Name="$SharePoint.Project.AssemblyFullName$" %>
+﻿<%@ Assembly Name="$SharePoint.Project.AssemblyFullName$" %>
 <%@ Register Tagprefix="SharePoint" Namespace="Microsoft.SharePoint.WebControls" Assembly="Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 <%@ Assembly Name="Microsoft.Web.CommandUI, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ManageFarmPackages.aspx.cs" Inherits="PackageManager.SharePoint.Layouts.PackageManager.SharePoint.ManageFarmPackagesPage" DynamicMasterPageFile="~masterurl/default.master" %>
@@ -19,7 +19,8 @@
         <Columns>
             <asp:TemplateField HeaderText="Id">
                 <ItemTemplate>
-                    <asp:Label ID="Id" runat="server" Text='<%# Bind("id") %>'/>
+                    <asp:Label ID="Id" runat="server" Text='<%# Bind("id") %>' Visible='<%# !BindHelper.IsInstalled(Eval("installed")) %>'/>
+                    <asp:HyperLink ID="Id2" runat="server" Text='<%# Bind("id") %>' NavigateUrl='<%# string.Format("/_admin/SolutionStatus.aspx?ItemName={0}", HttpUtility.UrlEncode(Eval("id").ToString()))%>' Visible='<%# BindHelper.IsInstalled(Eval("installed")) %>'/>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Installed">
