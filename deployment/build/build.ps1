@@ -1,5 +1,5 @@
 ﻿$buildScriptDir = (Split-Path $MyInvocation.MyCommand.Path)
-$VersionNumber = (GitVersion /showvariable NuGetVersionV2)
+$versionNumber = (GitVersion /showvariable NuGetVersionV2)
 
 $workspaceDir = Join-Path $buildScriptDir "..\.."
 $srcDir = Join-Path $workspaceDir "src"
@@ -32,10 +32,10 @@ foreach($dirToCreate in ($nugetPackOutDir, $nugetPackBaseDir, $wspOutputDir))
 	New-Item -Path $dirToCreate -ItemType Directory -Force
 }
 
-$xml = New-Object Xml
-$xml.Load($nuspecTemplateFile)
-$xml.package.metadata.version = $VersionNumber.ToString()
-$xml.Save($nuspecOutputFile)
+$nuspecXml = New-Object System.Xml.XmlDocument
+$nuspecXml.Load($nuspecTemplateFile)
+$nuspecXml.package.metadata.version = $versionNumber.ToString()
+$nuspecXml.Save($nuspecOutputFile)
 
 Copy-Item -Path $wspFile -Destination $wspOutputDir
 
